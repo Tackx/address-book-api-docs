@@ -1,0 +1,66 @@
+paths:
+  /api/contacts:
+    post:
+      tags:
+        - Contact
+      summary: Saves a new contact to the contact list.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/contactBody'
+      responses:
+        201:
+          description: Contact added to the contact list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/contactSuccessMessage'
+        400:
+          description: Required properties are missing or in the wrong format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/errMessage'
+        401:
+          description: Invalid token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/errMessage'
+definitions:
+  contactBody:
+    type: object
+    properties:
+      token:
+        description: Token (JWT) used for user authentication.
+        type: string
+        required: true
+      contact:
+        description: Contact object to be saved to the contact list.
+        type: object
+        required: true
+        properties:
+          firstName:
+            type: string
+          lastName:
+            type: string
+          phone:
+            type: integer
+          address:
+            type: string
+  contactSuccessMessage:
+    type: object
+    properties:
+      message:
+        type: string
+      savedContact:
+        type: string
+  errMessage:
+    type: object
+    properties:
+      message:
+        type: string

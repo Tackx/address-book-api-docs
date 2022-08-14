@@ -1,0 +1,27 @@
+version: '3'
+
+networks:
+  address-book-api-network:
+    name: address-book-api-network
+
+services:
+
+  # Docs service
+  docs:
+    container_name: docs
+    restart: unless-stopped
+    build:
+      context: .
+      target: development
+    env_file:
+      - .env
+    networks:
+      - address-book-api-network
+    volumes:
+      - ./:/usr/src/docs
+      - /usr/src/docs/node_modules
+      - docs-logs:/usr/src/docs/logs
+    command: npm run start:dev
+
+volumes:
+  docs-logs:

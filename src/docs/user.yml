@@ -1,0 +1,59 @@
+paths:
+  /api/users:
+    post:
+      tags:
+        - User
+      summary: Creates a new user.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/user'
+      responses:
+        201:
+          description: Registration successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/userSuccessMessage'
+        400:
+          description: Required properties are missing or in the wrong format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/errMessage'
+        409:
+          description: A user with this e-mail address already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/errMessage'
+definitions:
+  user:
+    type: object
+    properties:
+      email:
+        description: E-mail of the new user.
+        type: string
+        required: true
+      password:
+        description: Password of the new user.
+        type: string
+        required: true
+  userSuccessMessage:
+    type: object
+    properties:
+      message:
+        type: string
+      email:
+        type: string
+      token:
+        type: string
+  errMessage:
+    type: object
+    properties:
+      message:
+        type: string

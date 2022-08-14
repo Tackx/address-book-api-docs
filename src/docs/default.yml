@@ -1,0 +1,44 @@
+paths:
+  /:
+    get:
+      tags:
+        - Root route
+      summary: Redirects the user to the default /api route
+      produces:
+        - application/json
+      responses:
+        302:
+          description: Successfully redirected to the default route.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/defaultMessage'
+  /api:
+    get:
+      tags:
+        - Default route
+      summary: Returns a basic summary of the API.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/defaultMessage'
+definitions:
+  defaultMessage:
+    type: object
+    properties:
+      message:
+        type: string
+      repository:
+        type: string
+      version:
+        type: string
+  errMessage:
+    type: object
+    properties:
+      message:
+        type: string

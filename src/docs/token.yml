@@ -1,0 +1,53 @@
+paths:
+  /api/security/token:
+    post:
+      tags:
+        - Token
+      summary: Provides the user with a new JWT token.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/login'
+      responses:
+        200:
+          description: Login successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/userSuccessMessage'
+        400:
+          description: Required properties are missing or in the wrong format or invalid credentials.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/errMessage'
+definitions:
+  login:
+    type: object
+    properties:
+      email:
+        description: E-mail of the user.
+        type: string
+        required: true
+      password:
+        description: Password of the user.
+        type: string
+        required: true
+  userSuccessMessage:
+    type: object
+    properties:
+      message:
+        type: string
+      email:
+        type: string
+      token:
+        type: string
+  errMessage:
+    type: object
+    properties:
+      message:
+        type: string
