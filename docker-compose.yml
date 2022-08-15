@@ -9,6 +9,7 @@ services:
   # Docs service
   docs:
     container_name: docs
+    user: 0:0
     restart: unless-stopped
     build:
       context: .
